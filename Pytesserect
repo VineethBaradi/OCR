@@ -1,0 +1,101 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import pytesseract
+
+Grid = cv2.imread('Downloads/abaqus.jpg')
+Grid = cv2.cvtColor(Grid,cv2.COLOR_BGR2GRAY)
+plt.imshow(Grid)
+Grid.shape 
+
+def Display(img):
+    fig = plt.figure(figsize = (20,20))
+    ax  = fig.add_subplot(111)
+    ax.imshow(img,'gray')
+    
+#Grid = Grid[120:,:]
+plt.imshow(Grid,'gray')
+Grid.shape 
+
+height = Grid.shape[0]
+width = Grid.shape[1]
+h = height//3
+w = width//4
+
+Image = Grid[35:320,150:250]
+Img00 = Grid[:h,:w]
+Img01 = Grid[:h,w:2*w]
+Img02 = Grid[:h,2*w:3*w]
+Img03 = Grid[:h,3*w:4*w]
+plt.imshow(Image, 'gray')
+Display(Image)
+
+    """Image = cv2.medianBlur(Image,3)
+    Display(Image)"""
+   
+ret, ThreshImage= cv2.threshold(Image,100,255,cv2.THRESH_BINARY_INV)
+plt.imshow(ThreshImage, 'gray')
+Display(ThreshImage)
+
+#kernel = np.ones((1, 1), np.uint8)
+ThreshImage = cv2.dilate(ThreshImage, kernel, iterations=20)
+#ThreshImage = cv2.erode(ThreshImage, kernel, iterations=20)
+#ThreshImage = cv2.medianBlur(ThreshImage,1)
+#plt.imshow(Img00,'gray')
+
+Display(ThreshImage)
+
+'''ThreshImage = cv2.medianBlur(ThreshImage,3) 
+
+Display(ThreshImage)'''
+
+
+pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+text = ThreshImage
+text = pytesseract.image_to_string(text)
+print(text)
+
+text = text.replace(',','.')
+print(text)
+9658..
+
+text= text.splitlines()
+(float(text[0]))
+
+num = list(text)
+
+num = (np.array(num,np.float))
+#num = map(int,num)
+print(num)
+
+num = []
+for item in text:
+    num.append(float(item))
+    
+num.append(np.array(regr.predict(data),dtype = np.float))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
